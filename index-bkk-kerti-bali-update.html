@@ -1,0 +1,2300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BKK Kerti Bali - Sistem Informasi Pengelolaan Bantuan Keuangan Khusus Pemerintah Provinsi Bali">
+  <title>BKK Kerti Bali | Pemerintah Provinsi Bali</title>
+
+  <style>
+    /* =====================================================
+       1. VARIABEL DAN RESET
+    ===================================================== */
+    :root {
+      --red: #a51f32;
+      --dark: #781526;
+      --light: #f8e9eb;
+      --gold: #d6b45c;
+      --text: #30343b;
+      --muted: #707782;
+      --white: #ffffff;
+      --gray-bg: #f7f8fa;
+      --border: #e8e8e8;
+      --footer: #292d34;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--white);
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: auto;
+      padding: 0 22px;
+    }
+
+    .page {
+      display: none;
+      min-height: 70vh;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* =====================================================
+       2. HEADER DAN NAVIGASI
+    ===================================================== */
+    header {
+      min-height: 86px;
+      padding: 12px 4%;
+      background: var(--dark);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px #0002;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-bali {
+      width: 52px;
+      height: 62px;
+      object-fit: contain;
+      background: var(--white);
+      border-radius: 4px;
+      padding: 2px;
+    }
+
+    .logo-fallback {
+      display: none;
+      width: 52px;
+      height: 62px;
+      background: var(--white);
+      color: var(--dark);
+      border-radius: 4px;
+      place-items: center;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .brand-text {
+      border-left: 2px solid var(--white);
+      padding-left: 11px;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .brand-text small {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 19px;
+    }
+
+    nav a,
+    .nav-dropdown-btn {
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    nav a:hover,
+    .nav-dropdown-btn:hover {
+      color: var(--gold);
+    }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-btn {
+      border: 0;
+      background: none;
+      font-size: 13px;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 32px;
+      left: 0;
+      min-width: 210px;
+      padding: 8px;
+      background: var(--white);
+      border-radius: 7px;
+      box-shadow: 0 8px 25px #0003;
+    }
+
+    .dropdown-menu.show {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      color: var(--dark);
+      padding: 11px;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+
+    .dropdown-menu a:hover {
+      background: var(--light);
+    }
+
+    .login {
+      color: var(--dark);
+      background: var(--white);
+      padding: 11px 23px;
+      border-radius: 25px;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 0;
+      color: var(--white);
+      font-size: 25px;
+    }
+
+    /* =====================================================
+       3. HERO
+    ===================================================== */
+    .hero {
+      min-height: 660px;
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 5% 5%, #ffffff15 0 100px, transparent 102px),
+        radial-gradient(circle at 95% 90%, #ffffff15 0 130px, transparent 132px),
+        linear-gradient(115deg, #781526, #a51f32 60%, #c43a49);
+    }
+
+    .hero-inner {
+      max-width: 1280px;
+      min-height: 660px;
+      margin: auto;
+      padding: 55px 25px 125px;
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 3;
+      padding-left: 10px;
+    }
+
+    .hero-text h1 {
+      font-size: 37px;
+      line-height: 1.2;
+      margin-bottom: 22px;
+      font-weight: 800;
+    }
+
+    .hero-text p {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #fff0f1;
+      text-align: justify;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 13px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 21px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--dark);
+    }
+
+    .btn-dark {
+      background: #59101d;
+      color: var(--white);
+    }
+
+    /* Foto pimpinan */
+    .hero-image {
+      width: 100%;
+      height: 570px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    .foto-pimpinan {
+      display: block;
+      width: 120%;
+      max-width: none;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      position: relative;
+      z-index: 1;
+    }
+
+    .image-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      background: linear-gradient(90deg, #8f1728, #bd2838);
+      color: var(--white);
+      text-align: center;
+      padding: 12px 8px;
+      font-size: 12px;
+      font-weight: bold;
+      border-top: 2px solid var(--gold);
+      border-radius: 0 0 5px 5px;
+    }
+
+    .image-caption small {
+      display: block;
+      font-weight: normal;
+      font-style: italic;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    .image-missing {
+      width: 100%;
+      height: 100%;
+      background: #ffffff18;
+      border: 2px dashed #ffffff99;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .wave {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 110px;
+    }
+
+    .wave svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* =====================================================
+       4. SECTION UMUM
+    ===================================================== */
+    .section {
+      padding: 70px 0;
+    }
+
+    .section.gray {
+      background: var(--gray-bg);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+    }
+
+    .section-title h2 {
+      font-size: 27px;
+      margin: 10px 0;
+      color: #292d34;
+    }
+
+    .section-title p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* =====================================================
+       5. PENDAFTARAN
+    ===================================================== */
+    .choice-box {
+      max-width: 850px;
+      margin: auto;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 27px;
+      box-shadow: 0 5px 22px #00000008;
+    }
+
+    .choice-box h3 {
+      text-align: center;
+      font-size: 19px;
+      margin-bottom: 9px;
+    }
+
+    .choice-box > p {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 23px;
+    }
+
+    .choice {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding: 18px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+
+    .choice strong {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .choice small {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .choice button {
+      background: var(--red);
+      color: var(--white);
+      padding: 10px 19px;
+      border: 0;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .choice button:hover {
+      background: var(--dark);
+    }
+
+    /* =====================================================
+       6. TAHAPAN PERMOHONAN AKUN
+    ===================================================== */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 17px;
+    }
+
+    .process-card {
+      background: var(--white);
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 24px 17px;
+      text-align: center;
+    }
+
+    .process-number {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 14px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--light);
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .process-card h3 {
+      font-size: 14px;
+      margin-bottom: 9px;
+    }
+
+    .process-card p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* =====================================================
+       7. DIAGRAM ALUR
+    ===================================================== */
+    .flow-box {
+      background: var(--white);
+      border: 1px solid #e9e9e9;
+      border-radius: 10px;
+      padding: 25px;
+      margin-top: 25px;
+    }
+
+    .flow-heading {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .flow-heading h3 {
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    .flow-heading p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 7px;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px 13px;
+    }
+
+    .flow-item {
+      text-align: center;
+    }
+
+    .flow-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 9px;
+      border: 2px solid #aaa;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--white);
+      font-size: 29px;
+    }
+
+    .flow-step {
+      color: var(--white);
+      padding: 8px 5px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.4;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flow-item p {
+      font-size: 10px;
+      color: #666;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    .flow-note {
+      background: #fff5e5;
+      border-left: 4px solid #e5a43c;
+      padding: 14px 17px;
+      margin-top: 25px;
+      color: #66512e;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .flow-note strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .orange { background: #f28c45; }
+    .blue { background: #5274e8; }
+    .teal { background: #139bb0; }
+    .green { background: #75b94d; }
+    .red { background: #e95757; }
+    .yellow { background: #dba73f; }
+    .purple { background: #7560b7; }
+    .dark { background: #77716c; }
+    .sky { background: #4698e8; }
+    .emerald { background: #08a96b; }
+
+    /* =====================================================
+       8. FAQ
+    ===================================================== */
+    .faq-box {
+      max-width: 900px;
+      margin: auto;
+      background: var(--white);
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 8px 20px;
+    }
+
+    details {
+      padding: 17px 5px;
+      border-bottom: 1px solid #eee;
+    }
+
+    details:last-child {
+      border-bottom: 0;
+    }
+
+    summary {
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    details p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 10px;
+    }
+
+    /* =====================================================
+       9. HALAMAN PEDOMAN
+    ===================================================== */
+    .page-banner {
+      background: linear-gradient(110deg, var(--dark), var(--red));
+      color: var(--white);
+      text-align: center;
+      padding: 58px 20px;
+    }
+
+    .page-banner h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .page-banner p {
+      font-size: 13px;
+      color: #f7dfe2;
+    }
+
+    .content-container {
+      max-width: 1050px;
+      margin: auto;
+      padding: 45px 22px 65px;
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 25px;
+    }
+
+    .breadcrumb button {
+      color: var(--red);
+      border: 0;
+      background: none;
+      font-size: 12px;
+    }
+
+    .legal-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 25px #00000009;
+    }
+
+    .legal-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: var(--red);
+      color: var(--white);
+      padding: 25px;
+    }
+
+    .legal-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #ffffff20;
+      font-size: 28px;
+    }
+
+    .legal-header small {
+      font-size: 11px;
+    }
+
+    .legal-header h2 {
+      font-size: 22px;
+      margin: 5px 0;
+    }
+
+    .legal-body {
+      padding: 30px;
+      background: var(--white);
+    }
+
+    .label {
+      font-size: 11px;
+      color: var(--red);
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .legal-body h3 {
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .legal-body p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    .topics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .topic {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 15px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .topic strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .topic span {
+      color: var(--red);
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .document-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 20px;
+      background: #fafafa;
+      border-top: 1px solid #eee;
+      margin-top: 25px;
+    }
+
+    .document-link strong {
+      font-size: 13px;
+    }
+
+    .document-link small {
+      display: block;
+      color: #777;
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    .document-link a {
+      background: var(--red);
+      color: var(--white);
+      padding: 11px 17px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    /* =====================================================
+       10. TEMPLATE DOKUMEN
+    ===================================================== */
+    .heading {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .heading span {
+      font-size: 11px;
+      color: #ed542e;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .heading h2 {
+      font-size: 27px;
+      line-height: 1.4;
+      margin-top: 12px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: #687080;
+    }
+
+    .controls select,
+    .controls input {
+      padding: 9px 10px;
+      border: 1px solid #d9dfe7;
+      border-radius: 4px;
+      font-size: 12px;
+      background: var(--white);
+    }
+
+    .controls input {
+      width: 220px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      font-size: 12px;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 10px;
+      color: #596273;
+      border-bottom: 1px solid #b9bec8;
+    }
+
+    td {
+      padding: 11px 10px;
+      border-bottom: 1px solid #dce0e5;
+      color: #626c7b;
+      vertical-align: middle;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: #f1f1f1;
+    }
+
+    tbody tr:hover {
+      background: #fff0f0;
+    }
+
+    td:nth-child(2) {
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 20px;
+      color: var(--white);
+      font-size: 9px;
+      font-weight: bold;
+      margin: 2px;
+      white-space: nowrap;
+    }
+
+    .desa { background: #169765; }
+    .kab { background: #159fbd; }
+
+    .download {
+      display: inline-block;
+      border: 1px solid #7137d5;
+      color: #7137d5;
+      padding: 6px 10px;
+      border-radius: 3px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .download:hover {
+      background: #7137d5;
+      color: var(--white);
+    }
+
+    .table-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 15px;
+      font-size: 12px;
+      color: #687080;
+    }
+
+    .pagination {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .pagination button {
+      border: 1px solid #d9dfe7;
+      background: var(--white);
+      padding: 7px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    .pagination button.active {
+      background: #7137d5;
+      color: var(--white);
+    }
+
+    .pagination button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+
+    /* =====================================================
+       TAUTAN GOOGLE DRIVE DAN STATUS TEMPLATE
+    ===================================================== */
+    .drive-info {
+      margin-top: 22px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .drive-info p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .drive-info a {
+      display: inline-block;
+      flex-shrink: 0;
+      background: var(--red);
+      color: var(--white);
+      padding: 11px 17px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .template-status {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 30px;
+      text-align: center;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 5px 22px #00000008;
+    }
+
+    .template-status .status-icon {
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .template-status h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #292d34;
+    }
+
+    .template-status p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* =====================================================
+       11. FOOTER
+    ===================================================== */
+    footer {
+      background: var(--footer);
+      color: var(--white);
+      padding: 45px 0 20px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 35px;
+    }
+
+    footer h3 {
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    footer p,
+    footer a {
+      font-size: 12px;
+      color: #c8cbd0;
+      line-height: 1.9;
+    }
+
+    footer a {
+      display: block;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid #ffffff25;
+      margin-top: 28px;
+      padding-top: 18px;
+      color: #aaa;
+      font-size: 11px;
+    }
+
+    /* =====================================================
+       12. RESPONSIVE TABLET
+    ===================================================== */
+    @media (max-width: 950px) {
+      nav {
+        gap: 11px;
+      }
+
+      nav a,
+      .nav-dropdown-btn {
+        font-size: 11px;
+      }
+
+      .hero-inner {
+        grid-template-columns: 0.9fr 1.1fr;
+      }
+
+      .hero-text h1 {
+        font-size: 31px;
+      }
+
+      .foto-pimpinan {
+        width: 115%;
+      }
+    }
+
+    /* =====================================================
+       13. RESPONSIVE MOBILE
+    ===================================================== */
+    @media (max-width: 760px) {
+      header {
+        min-height: 75px;
+        padding: 10px 17px;
+        flex-wrap: wrap;
+      }
+
+      .logo-bali,
+      .logo-fallback {
+        width: 42px;
+        height: 50px;
+      }
+
+      .brand-text strong {
+        font-size: 11px;
+      }
+
+      .brand-text small {
+        font-size: 9px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      nav {
+        display: none;
+      }
+
+      nav.mobile-open {
+        display: flex;
+        position: absolute;
+        top: 75px;
+        left: 0;
+        width: 100%;
+        background: var(--dark);
+        padding: 15px 20px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 13px;
+      }
+
+      nav.mobile-open a,
+      .nav-dropdown-btn {
+        font-size: 13px;
+      }
+
+      .dropdown-menu {
+        position: static;
+        margin-top: 8px;
+      }
+
+      .hero-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 50px 20px 115px;
+        gap: 10px;
+      }
+
+      .hero-text {
+        padding: 0;
+      }
+
+      .hero-text h1 {
+        font-size: 28px;
+      }
+
+      .hero-text p {
+        font-size: 13px;
+      }
+
+      .hero-image {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 16 / 10;
+        margin: 10px auto 0;
+      }
+
+      .foto-pimpinan {
+        width: 115%;
+        height: 100%;
+        max-width: none;
+      }
+
+      .image-caption {
+        font-size: 10px;
+        padding: 9px 5px;
+      }
+
+      .image-caption small {
+        font-size: 9px;
+      }
+
+      .section {
+        padding: 48px 0;
+      }
+
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .flow-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .topics {
+        grid-template-columns: 1fr;
+      }
+
+      .document-link {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .controls {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .controls input {
+        width: 100%;
+      }
+
+      .table-footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .heading h2 {
+        font-size: 22px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .process-grid,
+      .flow-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .choice {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .flow-item {
+        max-width: 290px;
+        width: 100%;
+        margin: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===================================================
+       HEADER
+  ==================================================== -->
+  <header>
+    <div class="brand">
+      <img
+        src="assets/logo-provinsi_md.png"
+        class="logo-bali"
+        alt="Logo Pemerintah Provinsi Bali"
+        onerror="this.style.display='none';document.getElementById('logoFallback').style.display='grid';"
+      >
+
+      <div id="logoFallback" class="logo-fallback">
+        LOGO<br>BALI
+      </div>
+
+      <div class="brand-text">
+        <strong>PEMERINTAH PROVINSI BALI</strong>
+        <small>Bantuan Keuangan Khusus (BKK Kerti)</small>
+      </div>
+    </div>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Buka menu navigasi"
+      aria-expanded="false"
+      onclick="toggleMenu()"
+    >☰</button>
+
+    <nav id="mainNav">
+      <a href="#beranda" onclick="showPage('beranda')">Beranda</a>
+      <a href="#pendaftaran" onclick="showPage('beranda','pendaftaran')">Pendaftaran</a>
+
+      <div class="nav-dropdown">
+        <button
+          class="nav-dropdown-btn"
+          type="button"
+          onclick="togglePedoman(event)"
+        >Pedoman ⌄</button>
+
+        <div class="dropdown-menu" id="pedomanMenu">
+          <a href="#dasar-hukum" onclick="showPage('dasar-hukum')">📚 Dasar Hukum</a>
+          <a href="#pedoman-teknis" onclick="showPage('pedoman-teknis')">📘 Pedoman dan Petunjuk Teknis</a>
+          <a href="#template-dokumen" onclick="showPage('template-dokumen')">📄 Template Dokumen</a>
+          <a href="#panduan-pengguna" onclick="showPage('panduan-pengguna')">🧭 Panduan Pengguna</a>
+        </div>
+      </div>
+
+      <a href="#alur-permohonan" onclick="showPage('beranda','alur-permohonan')">Alur Permohonan</a>
+      <a href="#faq" onclick="showPage('beranda','faq')">FAQ</a>
+      <a href="#kontak" onclick="showPage('beranda','kontak')">Hubungi Kami</a>
+    </nav>
+
+    <a href="#" class="login">Masuk 🔒</a>
+  </header>
+
+  <!-- ===================================================
+       BERANDA
+  ==================================================== -->
+  <main id="page-beranda" class="page active">
+
+    <!-- HERO -->
+    <section class="hero" id="beranda">
+      <div class="hero-inner">
+
+        <div class="hero-text">
+          <h1>
+            BKK Kerti Bali<br>
+            Sistem Informasi Pengelolaan Bantuan Keuangan
+          </h1>
+
+          <p>
+            BKK Kerti merupakan sistem informasi pengelolaan Bantuan
+            Keuangan Khusus Pemerintah Provinsi Bali. Sistem ini
+            dikembangkan untuk memfasilitasi proses pengajuan usulan,
+            evaluasi dan verifikasi, perencanaan, penyaluran,
+            pelaksanaan, pelaporan, serta monitoring dan evaluasi
+            bantuan keuangan secara transparan, tertib, dan akuntabel.
+          </p>
+
+          <div class="hero-buttons">
+            <a
+              href="#pendaftaran"
+              class="btn btn-white"
+              onclick="showPage('beranda','pendaftaran')"
+            >▣ Ajukan Permohonan</a>
+
+            <a
+              href="#kontak"
+              class="btn btn-dark"
+              onclick="showPage('beranda','kontak')"
+            >☎ Hubungi Kami</a>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <img
+            src="assets/gubernur-wakil-gubernur-bali.png"
+            class="foto-pimpinan"
+            alt="Gubernur I Wayan Koster dan Wakil Gubernur I Nyoman Giri Prasta"
+            onerror="this.style.display='none';document.getElementById('fotoFallback').style.display='flex';"
+          >
+
+          <div id="fotoFallback" class="image-missing" style="display:none">
+            Foto Gubernur dan Wakil Gubernur Bali belum ditemukan.
+            Periksa folder assets dan nama file PNG.
+          </div>
+
+          <div class="image-caption">
+            I Wayan Koster, S.Sos., M.M. &nbsp; | &nbsp;
+            I Nyoman Giri Prasta, S.Sos.
+            <small>Gubernur dan Wakil Gubernur Bali</small>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="wave">
+        <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
+          <path
+            fill="#fff"
+            d="M0 55 C180 170 245 140 365 55
+            C485 -20 560 20 700 100
+            C850 180 930 155 1040 95
+            C1160 30 1230 90 1340 125
+            C1390 145 1420 115 1440 100
+            L1440 150 L0 150 Z"
+          />
+        </svg>
+      </div>
+    </section>
+
+    <!-- PENDAFTARAN -->
+    <section class="section" id="pendaftaran">
+      <div class="container">
+
+        <div class="section-title">
+          <span class="eyebrow">LAYANAN PENDAFTARAN</span>
+          <h2>Pendaftaran Akun BKK Kerti</h2>
+          <p>Pilih kategori instansi pemohon untuk melanjutkan proses pendaftaran.</p>
+        </div>
+
+        <div class="choice-box">
+          <h3>Pilih Jenis Pemohon</h3>
+          <p>Pastikan kategori instansi sesuai dengan kedudukan pemohon.</p>
+
+          <div class="choice">
+            <div>
+              <strong>Pemerintah Kabupaten/Kota</strong>
+              <small>
+                Registrasi akun bagi Pemerintah Kabupaten/Kota
+                di wilayah Provinsi Bali.
+              </small>
+            </div>
+
+            <button
+              type="button"
+              onclick="window.location.href='pendaftaran-kabkota.html'"
+            >Pilih</button>
+          </div>
+
+          <div class="choice">
+            <div>
+              <strong>Pemerintah Desa</strong>
+              <small>
+                Registrasi akun bagi Pemerintah Desa sesuai
+                ketentuan penerima bantuan.
+              </small>
+            </div>
+
+            <button
+              type="button"
+              onclick="window.location.href='pendaftaran-desa.html'"
+            >Pilih</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ALUR AKUN -->
+    <section class="section gray">
+      <div class="container">
+
+        <div class="section-title">
+          <span class="eyebrow">PANDUAN LAYANAN</span>
+          <h2>Alur Permohonan Akun</h2>
+          <p>Tahapan awal untuk memperoleh akses penggunaan BKK Kerti.</p>
+        </div>
+
+        <div class="process-grid">
+          <div class="process-card">
+            <div class="process-number">1</div>
+            <h3>Pilih Jenis Pemohon</h3>
+            <p>Pemohon memilih Pemerintah Kabupaten/Kota atau Pemerintah Desa.</p>
+          </div>
+
+          <div class="process-card">
+            <div class="process-number">2</div>
+            <h3>Isi Data Registrasi</h3>
+            <p>Melengkapi identitas instansi dan data pengguna yang ditunjuk.</p>
+          </div>
+
+          <div class="process-card">
+            <div class="process-number">3</div>
+            <h3>Verifikasi Akun</h3>
+            <p>Admin memeriksa data registrasi dan kewenangan pengguna.</p>
+          </div>
+
+          <div class="process-card">
+            <div class="process-number">4</div>
+            <h3>Akun Aktif</h3>
+            <p>Pengguna dapat masuk ke sistem sesuai hak akses yang diberikan.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- DIAGRAM PROPOSAL -->
+    <section class="section" id="alur-permohonan">
+      <div class="container">
+
+        <div class="section-title">
+          <span class="eyebrow">MEKANISME PENGELOLAAN BKK</span>
+          <h2>Alur Pengajuan Proposal</h2>
+          <p>
+            Gambaran tahapan permohonan bantuan keuangan berdasarkan
+            Pergub Bali Nomor 19 Tahun 2022.
+          </p>
+        </div>
+
+        <!-- ALUR KABUPATEN/KOTA -->
+        <div class="flow-box">
+          <div class="flow-heading">
+            <h3>
+              Alur Pengajuan Proposal Bantuan<br>
+              Pemerintah Kabupaten/Kota
+            </h3>
+            <p>Permohonan bantuan keuangan kepada Pemerintah Provinsi Bali.</p>
+          </div>
+
+          <div class="flow-grid">
+
+            <div class="flow-item">
+              <div class="flow-icon">🏛️</div>
+              <div class="flow-step orange">Pengajuan Permohonan</div>
+              <p>
+                Bupati/Wali Kota melalui Bappeda Kabupaten/Kota
+                mengajukan permohonan kepada Gubernur melalui Bappeda Provinsi.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📨</div>
+              <div class="flow-step blue">Penerimaan dan Penerusan Usulan</div>
+              <p>
+                Bappeda Provinsi mengumpulkan usulan dan meneruskannya
+                kepada Perangkat Daerah terkait.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">🔍</div>
+              <div class="flow-step teal">Evaluasi dan Verifikasi</div>
+              <p>
+                Perangkat Daerah terkait memeriksa administrasi,
+                kesesuaian teknis, dan kewajaran biaya.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📑</div>
+              <div class="flow-step green">Rekomendasi Perangkat Daerah</div>
+              <p>
+                Kepala Perangkat Daerah menyampaikan rekomendasi
+                kepada Gubernur melalui Bappeda Provinsi selaku TAPD.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">⚖️</div>
+              <div class="flow-step red">Pertimbangan TAPD</div>
+              <p>
+                TAPD mempertimbangkan rekomendasi berdasarkan
+                prioritas dan kemampuan keuangan daerah.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📊</div>
+              <div class="flow-step yellow">Penganggaran BKK</div>
+              <p>
+                BKK dianggarkan pada BPKAD selaku SKPKD sesuai
+                hasil perencanaan dan penganggaran.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📜</div>
+              <div class="flow-step purple">Penetapan Penerima</div>
+              <p>
+                Untuk BKK khusus, Keputusan Gubernur disiapkan
+                oleh Perangkat Daerah leading sector.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📂</div>
+              <div class="flow-step dark">Permohonan Pencairan</div>
+              <p>
+                Bupati/Wali Kota mengajukan permohonan pencairan
+                kepada Gubernur melalui Kepala BPKAD Provinsi.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">💳</div>
+              <div class="flow-step sky">Proses Penyaluran</div>
+              <p>
+                BPKAD memproses SPP-LS, SPM-LS, dan SP2D
+                sesuai kewenangan masing-masing.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📋</div>
+              <div class="flow-step emerald">Pelaksanaan dan LPJ</div>
+              <p>
+                Penerima melaksanakan kegiatan dan menyampaikan
+                laporan melalui Perangkat Daerah terkait.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="flow-note">
+            <strong>Dasar pengaturan:</strong>
+            Pasal 8–11 mengenai permohonan dan evaluasi;
+            Pasal 13 mengenai penganggaran;
+            Pasal 15 mengenai penetapan penerima dan petunjuk teknis;
+            Pasal 16–17 mengenai pencairan;
+            Pasal 19–20 dan Pasal 22 mengenai pelaporan serta monitoring dan evaluasi.
+          </div>
+        </div>
+
+        <!-- ALUR DESA -->
+        <div class="flow-box">
+          <div class="flow-heading">
+            <h3>
+              Alur Pengajuan Proposal Bantuan<br>
+              Pemerintah Desa
+            </h3>
+            <p>
+              Permohonan bantuan keuangan Pemerintah Desa
+              kepada Pemerintah Provinsi Bali.
+            </p>
+          </div>
+
+          <div class="flow-grid">
+
+            <div class="flow-item">
+              <div class="flow-icon">🏘️</div>
+              <div class="flow-step orange">Pengajuan Kepala Desa</div>
+              <p>
+                Kepala Desa menyiapkan proposal, RAB, tujuan,
+                manfaat, jadwal, dan dokumen pendukung.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📨</div>
+              <div class="flow-step blue">Penyampaian Permohonan</div>
+              <p>
+                Kepala Desa menyampaikan permohonan kepada Gubernur
+                melalui Bappeda Provinsi dengan rekomendasi Bupati/Wali Kota.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📂</div>
+              <div class="flow-step teal">Penerimaan Usulan</div>
+              <p>
+                Bappeda Provinsi mengumpulkan usulan dan
+                meneruskannya kepada Perangkat Daerah terkait.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">🔍</div>
+              <div class="flow-step green">Evaluasi dan Verifikasi</div>
+              <p>
+                Perangkat Daerah terkait memeriksa kelengkapan
+                administrasi, kesesuaian teknis, dan kewajaran biaya.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">⚖️</div>
+              <div class="flow-step red">Rekomendasi dan TAPD</div>
+              <p>
+                Rekomendasi Perangkat Daerah disampaikan melalui
+                Bappeda selaku TAPD untuk dipertimbangkan.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📊</div>
+              <div class="flow-step yellow">Penganggaran BKK</div>
+              <p>
+                BKK dianggarkan pada BPKAD selaku SKPKD sesuai
+                hasil perencanaan dan penganggaran.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📜</div>
+              <div class="flow-step purple">Penetapan Penerima</div>
+              <p>
+                Untuk BKK khusus, Keputusan Gubernur dan petunjuk
+                teknis disiapkan Perangkat Daerah leading sector.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📑</div>
+              <div class="flow-step dark">Permohonan Pencairan</div>
+              <p>
+                Khusus BKK khusus Desa, Kepala Desa mengajukan
+                pencairan kepada Perangkat Daerah leading sector untuk diverifikasi.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">💳</div>
+              <div class="flow-step sky">Proses Penyaluran</div>
+              <p>
+                Dokumen diteruskan melalui Kepala BPKAD dan
+                diproses melalui SPP-LS, SPM-LS, dan SP2D.
+              </p>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">📋</div>
+              <div class="flow-step emerald">Pelaksanaan dan LPJ</div>
+              <p>
+                Pemerintah Desa melaksanakan kegiatan dan
+                menyampaikan laporan melalui Perangkat Daerah terkait.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="flow-note">
+            <strong>Catatan khusus Pemerintah Desa:</strong>
+            Permohonan Desa mengikuti Pasal 8 dan Pasal 9.
+            Bantuan Desa yang dialokasikan secara top-down dikecualikan
+            dari ketentuan permohonan Pasal 8 huruf b sesuai Pasal 12 ayat (2).
+            Untuk pencairan BKK khusus Desa, Kepala Desa mengajukan kepada
+            Perangkat Daerah leading sector, yang melakukan verifikasi administrasi
+            dan meneruskan dokumen kepada Gubernur melalui Kepala BPKAD
+            sesuai Pasal 16 ayat (3) sampai dengan ayat (5).
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section gray" id="faq">
+      <div class="container">
+
+        <div class="section-title">
+          <span class="eyebrow">INFORMASI LAYANAN</span>
+          <h2>Pertanyaan yang Sering Diajukan</h2>
+        </div>
+
+        <div class="faq-box">
+          <details>
+            <summary>Apa itu BKK Kerti Bali?</summary>
+            <p>
+              BKK Kerti Bali merupakan sistem informasi pengelolaan
+              Bantuan Keuangan Khusus Pemerintah Provinsi Bali.
+            </p>
+          </details>
+
+          <details>
+            <summary>Siapa yang dapat mengajukan permohonan?</summary>
+            <p>
+              Pemerintah Kabupaten/Kota dan Pemerintah Desa sepanjang
+              memenuhi ketentuan penerima bantuan keuangan.
+            </p>
+          </details>
+
+          <details>
+            <summary>Apakah registrasi akun berarti bantuan disetujui?</summary>
+            <p>
+              Tidak. Registrasi akun hanya memberikan akses ke sistem.
+              Usulan tetap melalui proses evaluasi, verifikasi,
+              pertimbangan, dan penganggaran.
+            </p>
+          </details>
+
+          <details>
+            <summary>Bagaimana cara mengetahui status usulan?</summary>
+            <p>
+              Status usulan direncanakan dapat dipantau melalui akun
+              pemohon setelah fitur pelacakan pengajuan diaktifkan.
+            </p>
+          </details>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================
+       HALAMAN DASAR HUKUM
+  ==================================================== -->
+  <main id="page-dasar-hukum" class="page">
+
+    <section class="page-banner">
+      <h1>Dasar Hukum</h1>
+      <p>Landasan hukum pengelolaan Bantuan Keuangan Khusus Provinsi Bali</p>
+    </section>
+
+    <div class="content-container">
+
+      <div class="breadcrumb">
+        <button onclick="showPage('beranda')">Beranda</button>
+        / Pedoman / Dasar Hukum
+      </div>
+
+      <div class="legal-card">
+
+        <div class="legal-header">
+          <div class="legal-icon">📜</div>
+
+          <div>
+            <small>PERATURAN GUBERNUR BALI</small>
+            <h2>Nomor 19 Tahun 2022</h2>
+            <small>Dasar Hukum Pengelolaan BKK</small>
+          </div>
+        </div>
+
+        <div class="legal-body">
+
+          <div class="label">TENTANG</div>
+
+          <h3>
+            Tata Cara Penganggaran, Pelaksanaan dan Penatausahaan,
+            Pelaporan dan Pertanggungjawaban serta Monitoring
+            dan Evaluasi Belanja Bantuan Keuangan
+          </h3>
+
+          <p>
+            Peraturan ini mengatur tata cara pengelolaan Belanja
+            Bantuan Keuangan Pemerintah Provinsi Bali mulai dari
+            penganggaran, pelaksanaan dan penatausahaan,
+            penyaluran, pelaporan dan pertanggungjawaban,
+            hingga monitoring dan evaluasi.
+          </p>
+
+          <div class="label" style="margin-top:28px">
+            RUANG LINGKUP PENGATURAN
+          </div>
+
+          <div class="topics">
+            <div class="topic">
+              <strong><span>01</span> Penganggaran</strong>
+              Ketentuan perencanaan dan penganggaran bantuan keuangan.
+            </div>
+
+            <div class="topic">
+              <strong><span>02</span> Pelaksanaan dan Penatausahaan</strong>
+              Ketentuan pelaksanaan kegiatan dan pengelolaan bantuan.
+            </div>
+
+            <div class="topic">
+              <strong><span>03</span> Penyaluran Bantuan</strong>
+              Persyaratan dan mekanisme pencairan bantuan keuangan.
+            </div>
+
+            <div class="topic">
+              <strong><span>04</span> Pelaporan dan Pertanggungjawaban</strong>
+              Kewajiban pelaporan penggunaan bantuan oleh penerima.
+            </div>
+
+            <div class="topic">
+              <strong><span>05</span> Monitoring dan Evaluasi</strong>
+              Pemantauan pelaksanaan dan penggunaan bantuan keuangan.
+            </div>
+          </div>
+
+          <div class="document-link">
+            <div>
+              <strong>📄 Pergub Bali Nomor 19 Tahun 2022</strong>
+              <small>Kumpulan dokumen peraturan pada Google Drive</small>
+            </div>
+
+            <a href="https://drive.google.com/drive/folders/1-Uwu6r5mEpVg6jluHXUIj2AbMoZI4bDi?usp=sharing" target="_blank" rel="noopener noreferrer">
+              Buka Folder Dasar Hukum ↗
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===================================================
+       HALAMAN TEMPLATE DOKUMEN
+  ==================================================== -->
+  <main id="page-template-dokumen" class="page">
+
+    <section class="page-banner">
+      <h1>Template Dokumen</h1>
+      <p>Dokumen pendukung permohonan Bantuan Keuangan Khusus Provinsi Bali</p>
+    </section>
+
+    <div class="content-container">
+      <div class="breadcrumb">
+        <button onclick="showPage('beranda')">Beranda</button>
+        / Pedoman / Template Dokumen
+      </div>
+
+      <div class="heading">
+        <span>TEMPLATE DOKUMEN</span>
+        <h2>
+          Template Dokumen Bantuan Keuangan<br>
+          Pemerintah Provinsi Bali
+        </h2>
+      </div>
+
+      <div class="template-status">
+        <div class="status-icon">📄</div>
+        <h3>Dokumen Template Sedang Dalam Tahap Penyusunan</h3>
+        <p>
+          Template dokumen pendukung permohonan Bantuan Keuangan Khusus
+          Pemerintah Provinsi Bali sedang disiapkan. Dokumen akan ditampilkan
+          pada halaman ini setelah proses penyusunan dan verifikasi selesai.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================
+       FOOTER
+  ==================================================== -->
+  <!-- ===================================================
+       HALAMAN PEDOMAN DAN PETUNJUK TEKNIS
+  ==================================================== -->
+  <main id="page-pedoman-teknis" class="page">
+    <section class="page-banner">
+      <h1>Pedoman dan Petunjuk Teknis</h1>
+      <p>Pedoman pelaksanaan dan petunjuk teknis Bantuan Keuangan Khusus Provinsi Bali</p>
+    </section>
+
+    <div class="content-container">
+      <div class="breadcrumb">
+        <button onclick="showPage('beranda')">Beranda</button>
+        / Pedoman / Pedoman dan Petunjuk Teknis
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-header">
+          <div class="legal-icon">📘</div>
+          <div>
+            <small>DOKUMEN PELAKSANAAN</small>
+            <h2>Pedoman dan Petunjuk Teknis BKK</h2>
+            <small>Pemerintah Provinsi Bali</small>
+          </div>
+        </div>
+        <div class="legal-body">
+          <div class="label">INFORMASI DOKUMEN</div>
+          <h3>Pedoman dan Petunjuk Teknis Pelaksanaan Bantuan Keuangan Khusus</h3>
+          <p>
+            Folder ini memuat dokumen pedoman dan petunjuk teknis yang menjadi
+            acuan dalam pelaksanaan Bantuan Keuangan Khusus. Silakan membuka
+            folder Google Drive untuk melihat dokumen yang tersedia.
+          </p>
+          <div class="drive-info">
+            <p><strong>Folder Pedoman dan Petunjuk Teknis</strong><br>
+            Dokumen disimpan dan dikelola melalui Google Drive.</p>
+            <a href="https://drive.google.com/drive/folders/1noDSOT2SqcbhhGxzyT5SV2642MaJ6hO6?usp=sharing"
+               target="_blank" rel="noopener noreferrer">Buka Folder Google Drive ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================
+       HALAMAN PANDUAN PENGGUNA
+  ==================================================== -->
+  <main id="page-panduan-pengguna" class="page">
+    <section class="page-banner">
+      <h1>Panduan Pengguna</h1>
+      <p>Informasi penggunaan Sistem BKK Kerti Bali</p>
+    </section>
+
+    <div class="content-container">
+      <div class="breadcrumb">
+        <button onclick="showPage('beranda')">Beranda</button>
+        / Pedoman / Panduan Pengguna
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-header">
+          <div class="legal-icon">🧭</div>
+          <div>
+            <small>PUSAT INFORMASI</small>
+            <h2>Panduan Pengguna BKK Kerti Bali</h2>
+            <small>Pemerintah Provinsi Bali</small>
+          </div>
+        </div>
+        <div class="legal-body">
+          <div class="label">INFORMASI PANDUAN</div>
+          <h3>Panduan Penggunaan Sistem Informasi BKK Kerti Bali</h3>
+          <p>
+            Panduan pengguna disediakan untuk membantu pengguna memahami
+            tahapan dan tata cara penggunaan sistem BKK Kerti Bali.
+            Silakan membuka folder Google Drive untuk melihat panduan yang tersedia.
+          </p>
+          <div class="drive-info">
+            <p><strong>Folder Panduan Pengguna</strong><br>
+            Dokumen panduan disimpan dan dikelola melalui Google Drive.</p>
+            <a href="https://drive.google.com/drive/folders/1o9iLQjQyyjDgWZhxzpCGRu9xzCfOcS39?usp=drive_link"
+               target="_blank" rel="noopener noreferrer">Buka Folder Google Drive ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="kontak">
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div>
+          <h3>BKK KERTI BALI</h3>
+          <p>
+            Sistem Informasi Pengelolaan Bantuan Keuangan Khusus
+            Pemerintah Provinsi Bali.
+          </p>
+          <p>
+            Mewujudkan pengelolaan bantuan keuangan yang transparan
+            dan akuntabel.
+          </p>
+        </div>
+
+        <div>
+          <h3>MENU LAYANAN</h3>
+          <a href="#beranda" onclick="showPage('beranda')">Beranda</a>
+          <a href="#dasar-hukum" onclick="showPage('dasar-hukum')">Dasar Hukum</a>
+          <a href="#pedoman-teknis" onclick="showPage('pedoman-teknis')">Pedoman dan Petunjuk Teknis</a>
+          <a href="#template-dokumen" onclick="showPage('template-dokumen')">Template Dokumen</a>
+          <a href="#panduan-pengguna" onclick="showPage('panduan-pengguna')">Panduan Pengguna</a>
+          <a href="#alur-permohonan" onclick="showPage('beranda','alur-permohonan')">Alur Permohonan</a>
+          <a href="#faq" onclick="showPage('beranda','faq')">FAQ</a>
+        </div>
+
+        <div>
+          <h3>HUBUNGI KAMI</h3>
+          <p>BPKAD Provinsi Bali</p>
+          <p>Denpasar, Bali</p>
+          <p>Email: [Alamat email resmi]</p>
+          <p>Telepon: [Nomor layanan resmi]</p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 BKK Kerti Bali - Pemerintah Provinsi Bali
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ===================================================
+       JAVASCRIPT
+  ==================================================== -->
+  <script>
+    "use strict";
+
+    /* =====================================================
+       1. NAVIGASI HALAMAN
+    ===================================================== */
+    function showPage(page, section = null) {
+      document.querySelectorAll(".page").forEach(element => {
+        element.classList.remove("active");
+      });
+
+      const targetPage = document.getElementById(`page-${page}`);
+
+      if (targetPage) {
+        targetPage.classList.add("active");
+      }
+
+      closePedoman();
+      closeMobileMenu();
+
+      history.replaceState(null, "", `#${page}`);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      if (section) {
+        setTimeout(() => {
+          const targetSection = document.getElementById(section);
+
+          if (targetSection) {
+            targetSection.scrollIntoView({
+              behavior: "smooth"
+            });
+          }
+        }, 150);
+      }
+    }
+
+    /* =====================================================
+       2. MENU MOBILE
+    ===================================================== */
+    function toggleMenu() {
+      const navigation = document.getElementById("mainNav");
+      const button = document.querySelector(".menu-toggle");
+
+      const isOpen = navigation.classList.toggle("mobile-open");
+
+      button.setAttribute("aria-expanded", String(isOpen));
+    }
+
+    function closeMobileMenu() {
+      const navigation = document.getElementById("mainNav");
+      const button = document.querySelector(".menu-toggle");
+
+      navigation.classList.remove("mobile-open");
+      button.setAttribute("aria-expanded", "false");
+    }
+
+    /* =====================================================
+       3. DROPDOWN PEDOMAN
+    ===================================================== */
+    function togglePedoman(event) {
+      event.stopPropagation();
+
+      document.getElementById("pedomanMenu")
+        .classList.toggle("show");
+    }
+
+    function closePedoman() {
+      document.getElementById("pedomanMenu")
+        .classList.remove("show");
+    }
+
+    document.addEventListener("click", function(event) {
+      if (!event.target.closest(".nav-dropdown")) {
+        closePedoman();
+      }
+    });
+
+    /* =====================================================
+       4. DATA TEMPLATE DOKUMEN
+    ===================================================== */
+    const documents = [
+      {
+        name: "Surat Pernyataan Tanggungjawab Mutlak",
+        types: ["desa", "kab"],
+        file: "dokumen/template/surat-pernyataan-tanggungjawab-mutlak.docx"
+      },
+      {
+        name: "Laporan Penggunaan dan Pertanggungjawaban Bantuan Keuangan",
+        types: ["desa", "kab"],
+        file: "dokumen/template/laporan-penggunaan-pertanggungjawaban.docx"
+      },
+      {
+        name: "Surat Pernyataan Tanggungjawab Penggunaan Bantuan Keuangan",
+        types: ["desa", "kab"],
+        file: "dokumen/template/surat-pernyataan-tanggungjawab-penggunaan.docx"
+      },
+      {
+        name: "Surat Permohonan Pembuatan Akun BKK Kerti Bali",
+        types: ["desa", "kab"],
+        file: "dokumen/template/surat-permohonan-akun-bkk-kerti-bali.docx"
+      },
+      {
+        name: "Proposal Pemerintah Desa",
+        types: ["desa"],
+        file: "dokumen/template/proposal-pemerintah-desa.docx"
+      },
+      {
+        name: "Proposal Pemerintah Kabupaten/Kota",
+        types: ["kab"],
+        file: "dokumen/template/proposal-pemerintah-kabupaten-kota.docx"
+      },
+      {
+        name: "Surat Pernyataan Kebenaran Dokumen Bermeterai Cukup",
+        types: ["desa", "kab"],
+        file: "dokumen/template/surat-pernyataan-kebenaran-dokumen.docx"
+      }
+    ];
+
+    let currentPage = 1;
+
+    /* =====================================================
+       5. BADGE JENIS PEMOHON
+    ===================================================== */
+    function badges(types) {
+      return types.map(type => {
+        if (type === "desa") {
+          return '<span class="badge desa">Pemerintah Desa</span>';
+        }
+
+        return '<span class="badge kab">Pemerintah Kabupaten/Kota</span>';
+      }).join("");
+    }
+
+    /* =====================================================
+       6. RENDER TABEL DOKUMEN
+    ===================================================== */
+    function renderTable() {
+      const searchInput = document.getElementById("search");
+      const pageSizeInput = document.getElementById("pageSize");
+
+      if (!searchInput || !pageSizeInput) {
+        return;
+      }
+
+      const query = searchInput.value.toLowerCase().trim();
+      const pageSize = Number(pageSizeInput.value);
+
+      const filtered = documents.filter(item =>
+        item.name.toLowerCase().includes(query)
+      );
+
+      const totalPages = Math.max(
+        1,
+        Math.ceil(filtered.length / pageSize)
+      );
+
+      currentPage = Math.min(currentPage, totalPages);
+
+      const start = (currentPage - 1) * pageSize;
+      const rows = filtered.slice(start, start + pageSize);
+
+      const tableBody = document.getElementById("documentRows");
+
+      if (rows.length) {
+        tableBody.innerHTML = rows.map((item, index) => `
+          <tr>
+            <td>${start + index + 1}</td>
+            <td>${item.name}</td>
+            <td>${badges(item.types)}</td>
+            <td>
+              <a class="download" href="${item.file}" download>
+                ↓ Download
+              </a>
+            </td>
+          </tr>
+        `).join("");
+      } else {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="4" style="text-align:center">
+              Dokumen tidak ditemukan.
+            </td>
+          </tr>
+        `;
+      }
+
+      document.getElementById("tableInfo").textContent =
+        `Menampilkan ${filtered.length ? start + 1 : 0} sampai ${
+          Math.min(start + pageSize, filtered.length)
+        } dari ${filtered.length} entri`;
+
+      renderPagination(totalPages);
+    }
+
+    /* =====================================================
+       7. PAGINATION
+    ===================================================== */
+    function renderPagination(totalPages) {
+      const pagination = document.getElementById("pagination");
+
+      let html = `
+        <button
+          type="button"
+          onclick="changePage(-1)"
+          ${currentPage === 1 ? "disabled" : ""}
+        >Sebelumnya</button>
+      `;
+
+      for (let page = 1; page <= totalPages; page++) {
+        html += `
+          <button
+            type="button"
+            class="${page === currentPage ? "active" : ""}"
+            onclick="goPage(${page})"
+            ${page === currentPage ? 'aria-current="page"' : ""}
+          >${page}</button>
+        `;
+      }
+
+      html += `
+        <button
+          type="button"
+          onclick="changePage(1)"
+          ${currentPage === totalPages ? "disabled" : ""}
+        >Selanjutnya</button>
+      `;
+
+      pagination.innerHTML = html;
+    }
+
+    function changePage(step) {
+      const searchInput = document.getElementById("search");
+      const pageSizeInput = document.getElementById("pageSize");
+
+      const query = searchInput.value.toLowerCase().trim();
+      const pageSize = Number(pageSizeInput.value);
+
+      const count = documents.filter(item =>
+        item.name.toLowerCase().includes(query)
+      ).length;
+
+      const totalPages = Math.max(
+        1,
+        Math.ceil(count / pageSize)
+      );
+
+      currentPage = Math.max(
+        1,
+        Math.min(totalPages, currentPage + step)
+      );
+
+      renderTable();
+    }
+
+    function goPage(page) {
+      currentPage = page;
+      renderTable();
+    }
+
+    /* =====================================================
+       8. EVENT LISTENER TABEL
+    ===================================================== */
+    const searchElement = document.getElementById("search");
+    const pageSizeElement = document.getElementById("pageSize");
+
+    if (searchElement) {
+      searchElement.addEventListener("input", () => {
+        currentPage = 1;
+        renderTable();
+      });
+    }
+
+    if (pageSizeElement) {
+      pageSizeElement.addEventListener("change", () => {
+        currentPage = 1;
+        renderTable();
+      });
+    }
+
+    /* =====================================================
+       9. PEMBACAAN HASH URL
+    ===================================================== */
+    document.addEventListener("DOMContentLoaded", () => {
+      renderTable();
+
+      const hash = location.hash.replace("#", "");
+
+      const availablePages = [
+        "beranda",
+        "dasar-hukum",
+        "pedoman-teknis",
+        "template-dokumen",
+        "panduan-pengguna"
+      ];
+
+      if (availablePages.includes(hash)) {
+        showPage(hash);
+      } else {
+        showPage("beranda");
+      }
+    });
+  </script>
+
+</body>
+</html>
